@@ -1,14 +1,85 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>replit</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
-    <p>
-        Hello
-    </p>
+  <header>
+    <h1>
+      Task Tracker
+    </h1>
+  </header>
+    <form id="sessionForm">
+      <h2>Start by creating a workout session</h2>
+      <div class="form-row">
+          <label for="sessionRating">Session Rating</label>
+          <span class="star" data-rating="1">★</span>
+          <span class="star" data-rating="2">★</span>
+          <span class="star" data-rating="3">★</span>
+          <span class="star" data-rating="4">★</span>
+          <span class="star" data-rating="5">★</span>
+          <input type="hidden" name="sessionRating" id="sessionRating" required>
+      </div>
+      <div class="form-row">
+          <label for="sessionDuration">Session Duration (minutes) </label>
+          <input type="number" name="sessionDuration" id="sessionDuration" required>
+      </div>
+      <div class="form-row">
+          <input type="submit" value="Add Session">
+      </div>
+    </form>
+  
+    <form id="workoutForm">
+      <h3>Add individual workouts</h3>
+      <div class="form-row">
+          <label for="workoutType">Workout Category</label>
+          <select name="workoutType" id="workoutType" required>
+              <option value="Cardio">Cardio</option>
+              <option value="Strength">Strength</option>
+              <option value="Legs">Legs</option>
+              <option value="Arms">Arms</option>
+              <option value="Chest">Chest</option>
+              <option value="Back">Back</option>
+              <option value="Other">Other</option>
+          </select>
+      </div>
+      <div class="form-row">
+        <label for="workoutName">Workout Name</label>
+        <input type="text" name="workoutName" id="workoutName" required="true" />
+      </div>
+      <div class="form-row">
+        <label for="workoutSets">Sets</label>
+        <input type="number" name="workoutSets" id="workoutSets" required="true" />
+      </div>
+      <div class="form-row">
+        <label for="workoutReps">Reps</label>
+        <input type="number" name="workoutReps" id="workoutReps" required="true" />
+      </div>
+      <div class="form-row">
+        <label for="workoutWeight">Weight (kg)</label>
+        <input type="number" name="workoutWeight" id="workoutWeight" required="true" />
+      </div>
+      <div class="form-row">
+        <input type="submit" value="Add Workout">
+      </div>
+    </form>
+
+  <h2>Sessions</h2>
+  <ul id="sessionList">
+  </ul>
+
+  <h3>Workouts</h3>
+  <ul id="workoutList">
+  </ul>
+
+  <pre id="sessionListDisplay"></pre>
+  <script src="script.js"></script>
+  </script>
 </body>
+
 </html>
