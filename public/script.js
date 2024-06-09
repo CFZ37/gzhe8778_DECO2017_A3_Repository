@@ -1,9 +1,11 @@
+// listening for all DOM elements to be fully loaded before script begins running
 document.addEventListener('DOMContentLoaded', (event) => {
     const sessionForm = document.getElementById("session-form");
     const workoutForm = document.getElementById("workout-form");
     const sessionList = document.getElementById("sessionList");
     const workoutSessionSelect = document.getElementById("workoutSession");
 
+// parsing localStorage for stored sessions, otherwise initialize an empty array if none exist
     let sessions = JSON.parse(localStorage.getItem('sessions')) || [];
     let currentSession = null;
 
@@ -130,6 +132,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         workoutList.appendChild(item);
     }
 
+// ChatGPT generation. 
     function updateWorkoutSessionOptions() {
         workoutSessionSelect.innerHTML = '';
         sessions.forEach(session => {
