@@ -1,119 +1,146 @@
-const sessionForm = document.getElementById("sessionForm");
-const workoutForm = document.getElementById("workoutForm");
-const sessionList = document.getElementById("sessionList");
-const workoutList = document.getElementById("workoutList");
+document.addEventListener('DOMContentLoaded', (event) => {
+    const sessionForm = document.getElementById("session-form");
+    const workoutForm = document.getElementById("workout-form");
+    const sessionList = document.getElementById("sessionList");
+    const workoutSessionSelect = document.getElementById("workoutSession");
 
-let sessions = [];
-let currentSession = null;
+    let sessions = JSON.parse(localStorage.getItem('sessions')) || [];
+    let currentSession = null;
 
-document.querySelectorAll('.star').forEach(star => {
-    star.addEventListener('click', function() {
-        let rating = this.getAttribute('data-rating');
+    // Load sessions from localStorage on page load
+    sessions.forEach(session => displaySession(session));
+    updateWorkoutSessionOptions();
+
+    document.querySelectorAll('.star').forEach(star => {
+        star.addEventListener('click', function() {
+            let rating = this.getAttribute('data-rating');
+            document.querySelectorAll('.star').forEach(star => {
+                star.classList.remove('checked');
+            });
+            for (let i = 0; i < rating; i++) {
+                document.querySelectorAll('.star')[i].classList.add('checked');
+            }
+            document.getElementById('sessionRating').value = rating;
+        });
+    });
+
+    sessionForm.addEventListener("submit", function(event) {
+        event.preventDefault();
+        let sessionRating = sessionForm.elements.sessionRating.value;
+        let sessionDuration = sessionForm.elements.sessionDuration.value;
+        currentSession = addSession(sessionRating, sessionDuration);
+        displaySession(currentSession);
+        updateWorkoutSessionOptions();
+        saveSessionsToLocalStorage();
+        sessionForm.reset();
         document.querySelectorAll('.star').forEach(star => {
             star.classList.remove('checked');
         });
-        for (let i = 0; i < rating; i++) {
-            document.querySelectorAll('.star')[i].classList.add('checked');
+    });
+
+    workoutForm.addEventListener("submit", function(event) {
+        event.preventDefault();
+        let selectedSessionId = workoutForm.elements.workoutSession.value;
+        let session = sessions.find(s => s.id == selectedSessionId);
+        if (session) {
+            let workoutType = workoutForm.elements.workoutType.value;
+            let workoutName = workoutForm.elements.workoutName.value;
+            let workoutSets = workoutForm.elements.workoutSets.value;
+            let workoutReps = workoutForm.elements.workoutReps.value;
+            let workoutWeight = workoutForm.elements.workoutWeight.value;
+            let workout = addWorkout(session, workoutType, workoutName, workoutSets, workoutReps, workoutWeight);
+            displayWorkout(workout, session);
+            saveSessionsToLocalStorage();
+            workoutForm.reset();
+        } else {
+            alert('Please select a session first!');
         }
-        document.getElementById('sessionRating').value = rating;
     });
-});
 
-sessionForm.addEventListener("submit", function(event) {
-    event.preventDefault();
-    let sessionRating = sessionForm.elements.sessionRating.value;
-    let sessionDuration = sessionForm.elements.sessionDuration.value;
-    currentSession = addTask(sessionRating, sessionDuration);
-    displayTask(currentSession, 'session');
-    sessionForm.reset();
-    document.querySelectorAll('.star').forEach(star => {
-        star.classList.remove('checked');
-    });
-});
+    function addSession(sessionRating, sessionDuration) {
+        let workoutSession = {
+            id: Date.now(),
+            sessionDate: new Date().toISOString(),
+            sessionRating: sessionRating,
+            sessionDuration: sessionDuration,
+            workoutItems: [],
+        };
 
-workoutForm.addEventListener("submit", function(event) {
-    event.preventDefault();
-    if (currentSession) {
-        let workoutType = workoutForm.elements.workoutType.value;
-        let workoutName = workoutForm.elements.workoutName.value;
-        let workoutSets = workoutForm.elements.workoutSets.value;
-        let workoutReps = workoutForm.elements.workoutReps.value;
-        let workoutWeight = workoutForm.elements.workoutWeight.value;
-        let workout = addWorkout(currentSession, workoutType, workoutName, workoutSets, workoutReps, workoutWeight);
-        displayTask(workout, 'workout', currentSession);
-        workoutForm.reset();
-    } else {
-        alert('Please create a session first!');
+        sessions.push(workoutSession);
+        return workoutSession;
     }
-});
 
-function addTask(sessionRating, sessionDuration) {
-    let workoutSession = {
-        id: Date.now(),
-        sessionDate: new Date().toISOString(),
-        sessionRating: sessionRating,
-        sessionDuration: sessionDuration,
-        workoutItems: [],
-    };
+    function addWorkout(session, workoutType, workoutName, workoutSets, workoutReps, workoutWeight) {
+        let workoutItem = {
+            id: Date.now(),
+            workoutType: workoutType,
+            workoutName: workoutName,
+            workoutSets: workoutSets,
+            workoutReps: workoutReps,
+            workoutWeight: workoutWeight,
+        };
 
-    sessions.push(workoutSession);
-    return workoutSession;
-}
+        session.workoutItems.push(workoutItem);
+        return workoutItem;
+    }
 
-function addWorkout(session, workoutType, workoutName, workoutSets, workoutReps, workoutWeight) {
-    let workoutItem = {
-        id: Date.now(),
-        workoutType: workoutType,
-        workoutTypeImage: "",
-        workoutName: workoutName,
-        workoutSets: workoutSets,
-        workoutReps: workoutReps,
-        workoutWeight: workoutWeight,
-        workoutPR: "",
-    };
-
-    session.workoutItems.push(workoutItem);
-    return workoutItem;
-}
-
-function displayTask(task, type, session) {
-    let item = document.createElement("li");
-    item.setAttribute("data-id", task.id);
-    if (type === 'session') {
+    function displaySession(session) {
+        let item = document.createElement("li");
+        item.setAttribute("data-id", session.id);
         item.innerHTML = `<p><strong>Session</strong><br>
-                          Rating: ${task.sessionRating}<br>
-                          Duration: ${task.sessionDuration} minutes<br>
-                          Date: ${task.sessionDate}</p>`;
+                          Rating: ${session.sessionRating}<br>
+                          Duration: ${session.sessionDuration} minutes<br>
+                          Date: ${new Date(session.sessionDate).toLocaleString()}</p>
+                          <ul id="workoutList-${session.id}"></ul>`;
+
+        let delButton = document.createElement("button");
+        delButton.textContent = "Delete";
+        delButton.addEventListener("click", function() {
+            item.remove();
+            sessions = sessions.filter(s => s.id != session.id);
+            saveSessionsToLocalStorage();
+            updateWorkoutSessionOptions();
+        });
+
+        item.appendChild(delButton);
         sessionList.appendChild(item);
-    } else if (type === 'workout') {
-        item.innerHTML = `<p><strong>${task.workoutName}</strong><br>
-                          Type: ${task.workoutType}<br>
-                          Sets: ${task.workoutSets}<br>
-                          Reps: ${task.workoutReps}<br>
-                          Weight: ${task.workoutWeight} kg</p>`;
+
+        session.workoutItems.forEach(workout => displayWorkout(workout, session));
+    }
+
+    function displayWorkout(workout, session) {
+        let workoutList = document.getElementById(`workoutList-${session.id}`);
+        let item = document.createElement("li");
+        item.setAttribute("data-id", workout.id);
+        item.innerHTML = `<p><strong>${workout.workoutName}</strong><br>
+                          Type: ${workout.workoutType}<br>
+                          Sets: ${workout.workoutSets}<br>
+                          Reps: ${workout.workoutReps}<br>
+                          Weight: ${workout.workoutWeight} kg</p>`;
+
+        let delButton = document.createElement("button");
+        delButton.textContent = "Delete";
+        delButton.addEventListener("click", function() {
+            item.remove();
+            session.workoutItems = session.workoutItems.filter(w => w.id != workout.id);
+            saveSessionsToLocalStorage();
+        });
+
+        item.appendChild(delButton);
         workoutList.appendChild(item);
     }
 
-    // Setup delete button DOM elements
-    let delButton = document.createElement("button");
-    let delButtonText = document.createTextNode("Delete");
-    delButton.appendChild(delButtonText);
-    item.appendChild(delButton);
+    function updateWorkoutSessionOptions() {
+        workoutSessionSelect.innerHTML = '';
+        sessions.forEach(session => {
+            let option = document.createElement("option");
+            option.value = session.id;
+            option.textContent = `${new Date(session.sessionDate).toLocaleString()} (Rating: ${session.sessionRating}, Duration: ${session.sessionDuration} mins)`;
+            workoutSessionSelect.appendChild(option);
+        });
+    }
 
-    // Listen for when the delete button is clicked
-    delButton.addEventListener("click", function(event) {
-        item.remove(); // Remove the task item from the page when button clicked
-        if (type === 'session') {
-            sessions = sessions.filter(session => session.id != task.id);
-            workoutList.innerHTML = '';
-        } else if (type === 'workout') {
-            session.workoutItems = session.workoutItems.filter(workout => workout.id != task.id);
-        }
-        // Make sure the deletion worked by logging out the whole array
-        console.log(sessions);
-    });
-}
-
-function displaySessions() {
-    document.getElementById('sessionListDisplay').textContent = JSON.stringify(sessions, null, 2);
-}
+    function saveSessionsToLocalStorage() {
+        localStorage.setItem('sessions', JSON.stringify(sessions));
+    }
+});

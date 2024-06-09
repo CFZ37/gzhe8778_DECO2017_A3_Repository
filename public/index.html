@@ -1,85 +1,88 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
-  <title>replit</title>
-  <link href="style.css" rel="stylesheet" type="text/css" />
+  <title>Gymtrak</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
 <body>
   <header>
-    <h1>
-      Task Tracker
-    </h1>
+    <h1>Gymtrak</h1>
+    <h2>Track your workouts! Start by creating a session, then add invidual workouts</h2>
   </header>
-    <form id="sessionForm">
-      <h2>Start by creating a workout session</h2>
-      <div class="form-row">
-          <label for="sessionRating">Session Rating</label>
-          <span class="star" data-rating="1">★</span>
-          <span class="star" data-rating="2">★</span>
-          <span class="star" data-rating="3">★</span>
-          <span class="star" data-rating="4">★</span>
-          <span class="star" data-rating="5">★</span>
-          <input type="hidden" name="sessionRating" id="sessionRating" required>
-      </div>
-      <div class="form-row">
-          <label for="sessionDuration">Session Duration (minutes) </label>
-          <input type="number" name="sessionDuration" id="sessionDuration" required>
-      </div>
-      <div class="form-row">
-          <input type="submit" value="Add Session">
-      </div>
-    </form>
-  
-    <form id="workoutForm">
-      <h3>Add individual workouts</h3>
-      <div class="form-row">
-          <label for="workoutType">Workout Category</label>
-          <select name="workoutType" id="workoutType" required>
+  <div class="container">
+    <div id="forms-section">
+      <section id="session-form-section">
+        <form id="session-form">
+          <h2>New Session</h2>
+          <div class="form-row">
+            <label for="sessionRating">Session Rating</label>
+            <span id="sessionRatingStars">
+              <span class="star" data-rating="1">&#9733;</span>
+              <span class="star" data-rating="2">&#9733;</span>
+              <span class="star" data-rating="3">&#9733;</span>
+              <span class="star" data-rating="4">&#9733;</span>
+              <span class="star" data-rating="5">&#9733;</span>
+            </span>
+            <input type="hidden" id="sessionRating" name="sessionRating">
+          </div>
+          <div class="form-row">
+            <label for="sessionDuration">Session Duration (minutes)</label>
+            <input type="number" id="sessionDuration" name="sessionDuration" required>
+          </div>
+          <div class="form-submit">
+            <input type="submit" value="Create Session">
+          </div>
+        </form>
+      </section>
+      <section id="workout-form-section">
+        <form id="workout-form">
+          <h3>Add Workouts</h3>
+          <div class="form-row">
+            <label for="workoutSession">Session</label>
+            <select id="workoutSession" name="workoutSession" required>
+              <!-- Options will be added dynamically -->
+            </select>
+          </div>
+          <div class="form-row">
+            <label for="workoutType">Type</label>
+            <select id="workoutType" name="workoutType" required>
               <option value="Cardio">Cardio</option>
               <option value="Strength">Strength</option>
               <option value="Legs">Legs</option>
+              <option value="Back">Back</option>
               <option value="Arms">Arms</option>
               <option value="Chest">Chest</option>
-              <option value="Back">Back</option>
               <option value="Other">Other</option>
-          </select>
-      </div>
-      <div class="form-row">
-        <label for="workoutName">Workout Name</label>
-        <input type="text" name="workoutName" id="workoutName" required="true" />
-      </div>
-      <div class="form-row">
-        <label for="workoutSets">Sets</label>
-        <input type="number" name="workoutSets" id="workoutSets" required="true" />
-      </div>
-      <div class="form-row">
-        <label for="workoutReps">Reps</label>
-        <input type="number" name="workoutReps" id="workoutReps" required="true" />
-      </div>
-      <div class="form-row">
-        <label for="workoutWeight">Weight (kg)</label>
-        <input type="number" name="workoutWeight" id="workoutWeight" required="true" />
-      </div>
-      <div class="form-row">
-        <input type="submit" value="Add Workout">
-      </div>
-    </form>
-
-  <h2>Sessions</h2>
-  <ul id="sessionList">
-  </ul>
-
-  <h3>Workouts</h3>
-  <ul id="workoutList">
-  </ul>
-
-  <pre id="sessionListDisplay"></pre>
+            </select>
+          </div>
+          <div class="form-row">
+            <label for="workoutName">Name</label>
+            <input type="text" id="workoutName" name="workoutName" required>
+          </div>
+          <div class="form-row">
+            <label for="workoutSets">Sets</label>
+            <input type="number" id="workoutSets" name="workoutSets" required>
+          </div>
+          <div class="form-row">
+            <label for="workoutReps">Reps</label>
+            <input type="number" id="workoutReps" name="workoutReps" required>
+          </div>
+          <div class="form-row">
+            <label for="workoutWeight">Weight (kg)</label>
+            <input type="number" id="workoutWeight" name="workoutWeight" required>
+          </div>
+          <div class="form-submit">
+            <input type="submit" value="Add Workout">
+          </div>
+        </form>
+      </section>
+    </div>
+    <div id="lists-section" class="task-section">
+      <h2>Past Sessions</h2>
+      <ul id="sessionList"></ul>
+    </div>
+  </div>
   <script src="script.js"></script>
-  </script>
 </body>
-
 </html>

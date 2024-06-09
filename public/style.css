@@ -1,48 +1,167 @@
 html {
-    height: 100%;
-    width: 100%;
-    font-family: Arial, Helvetica, sans-serif;
-  }
-                  
-  header > h1 {
-    text-align: center;
-  }
-                  
-  .star {
-    font-size: 2em;
-    cursor: pointer;
-  }
-  .star.checked {
-    color: gold;
-  }
-  
-  form {
-    max-width: 500px;
-    margin: 0 auto;
-    border: 2px solid grey;
-    padding: 2em 1em;
-  }
-  
-  form > h2 {
-    text-align: center;
-  }
-  
-  form > h3 {
-    text-align: center;
-  }
-                  
-  .form-row {
-    display: flex;
-    justify-content: flex-end;
-    padding: .5em;
-  }
-                  
-  .form-row > label {
-    width: 100px;
-  }
-                  
-  .form-row > input {
-    padding: .5em;
-    flex-grow: 1;
-  }
-  
+  height: 100%;
+  width: 100%;
+  font-family: 'Trebuchet MS', sans-serif;
+}
+
+body { 
+  margin: 0;
+  padding: 0;
+  background-image: linear-gradient(#f1b635, #45e4a2);
+  background-attachment: fixed;
+}
+
+header > h1 {
+  font-size: 50px;
+  text-align: center;
+}
+
+header > h2 {
+  font-size: 20px;
+  text-align: center;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.star {
+  font-size: 2em;
+  cursor: pointer;
+}
+.star.checked {
+  color: gold;
+}
+
+#session-form {
+  max-width: 500px; 
+  margin: 20px;
+  border-radius: 30px;
+  border: 1px solid rgb(11, 69, 122);
+  background-image: linear-gradient(#ffecc3, #ffa7ba);
+  padding: 20px 50px;
+}
+
+#workout-section {
+  background-image: linear-gradient(#a5faef, #f8d4dc);
+}
+
+#workout-form {
+  max-width: 500px;
+  margin: 20px;
+  border-radius: 30px;
+  border: 1px solid rgb(11, 69, 122);
+  background-image: linear-gradient(#ffa7ba, #93fff6);
+  padding: 20px 50px;
+}
+
+form > h2 {
+  text-align: center;
+}
+
+form > h3 {
+  text-align: center;
+}
+
+.form-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+}
+
+.form-row > input, .form-row > select {
+  border-radius: 25px;
+  padding: 8px;
+  flex: 1;
+}
+
+.form-row > label {
+  flex: 0 0 auto;
+  margin-right: 10px;
+  white-space: nowrap;
+}
+
+.form-submit {
+  display: flex;
+  justify-content: center;
+  align-content: space-around;
+  padding: 8px;
+}
+
+.form-submit > input {
+  border-radius: 25px;
+  font-size: 18px;
+  color: #ffffff;
+  background-color: #c22e4e;
+  padding: 8px;
+  flex-grow: 1;
+}
+
+.task-section {
+  max-width: 800px;
+  border-radius: 30px;
+  border: 1px solid rgb(11, 69, 122);
+  background-image: linear-gradient(#ffecc3, #ffa7ba);
+  flex-wrap: wrap ;
+  padding: 20px 50px;
+} 
+
+#forms-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+#lists-section {
+  display: flex;
+  flex-direction: column;
+  align-content: space-evenly;
+  flex-wrap: wrap;
+}
+
+#sessionList {
+  display: flex;
+  flex-wrap: wrap;
+  list-style-type: none;
+  padding: 0px;
+}
+
+
+#sessionList li {
+  margin: 5px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+}
+
+#sessionList li ul {
+  list-style-type: none;
+  padding: 15px;
+  margin-top: 10px;
+}
+
+#sessionList li ul li {
+  margin-bottom: 10px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+button {
+  margin-top: 10px;
+  padding: 10px 15px;
+  border-radius: 10px;
+  background-color: #c22e4e;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #a0203c;
+}
