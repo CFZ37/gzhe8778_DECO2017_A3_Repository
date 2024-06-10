@@ -6,12 +6,19 @@
 </head>
 
 <body>
+  <!-- adding some instructions for first-time users -->
   <header>
     <h1>Gymtrak</h1>
     <h2>Track your workouts! Start by creating a session, then add invidual workouts</h2>
   </header>
+
+  <!-- extra container had to be created after forms sections in order to 
+   fit both the submission forms and displayed workout items next to each other.
+   Prior to this they would instead stack vertically -->
   <div class="container">
+    <!-- left side of page, for submission forms -->
     <div id="forms-section">
+      <!-- Session form -->
       <section id="session-form-section">
         <form id="session-form">
           <h2>New Session</h2>
@@ -35,13 +42,14 @@
           </div>
         </form>
       </section>
+      <!-- Individual Workout form -->
       <section id="workout-form-section">
         <form id="workout-form">
           <h3>Add Workouts</h3>
           <div class="form-row">
             <label for="workoutSession">Session</label>
+            <!-- Dynamic session label (GPT assistance) -->
             <select id="workoutSession" name="workoutSession" required>
-              <!-- Options will be added dynamically -->
             </select>
           </div>
           <div class="form-row">
@@ -54,6 +62,8 @@
               <option value="Arms">Arms</option>
               <option value="Chest">Chest</option>
               <option value="Other">Other</option>
+              <!-- Originally had the plan to make the last category an 'other' with text input' 
+               However being able to directly type the workout name was close enough for functionality -->
             </select>
           </div>
           <div class="form-row">
@@ -72,12 +82,14 @@
             <label for="workoutWeight">Weight (kg)</label>
             <input type="number" id="workoutWeight" name="workoutWeight" required>
           </div>
+          <!-- Setting a different class for the final two "submit" buttons so they could be styled differently -->
           <div class="form-submit">
             <input type="submit" value="Add Workout">
           </div>
         </form>
       </section>
     </div>
+    <!-- right side of page, with displayed sessions and workouts when submitted -->
     <div id="lists-section" class="task-section">
       <h2>Past Sessions</h2>
       <ul id="sessionList"></ul>

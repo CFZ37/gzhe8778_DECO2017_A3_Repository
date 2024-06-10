@@ -7,7 +7,9 @@ html {
 body { 
   margin: 0;
   padding: 0;
-  background-image: linear-gradient(#f1b635, #45e4a2);
+  /* Gradient background. Played around with VSCode's colour picker to end up with the current colour scheme */
+  /* Wanted to give off a casual, lighthearted but sporty vibe with the aesthetics */
+  background-image: linear-gradient(#f1b635, #45e4a2); 
   background-attachment: fixed;
 }
 
@@ -24,28 +26,30 @@ header > h2 {
 .container {
   display: flex;
   justify-content: center;
+  /* responsive design. When webpage dimension drops below certain width, items in container (submission forms and past submissions) 
+  wrap below each other vertically. On mobile this means that users only have to scroll down to view past submissions */
   flex-wrap: wrap;
 }
 
+/* style for star rating. Created with assistance from ChatGPT */
 .star {
   font-size: 2em;
   cursor: pointer;
 }
+/* Colour change upon clicking */
 .star.checked {
   color: gold;
 }
 
+/* Styles for the submission forms. Made all boxes round in accordance with the softer and calmer aesthetic */
 #session-form {
   max-width: 500px; 
   margin: 20px;
   border-radius: 30px;
   border: 1px solid rgb(11, 69, 122);
+  /* gradient backgrounds from session form and workout form form a continuous colour gradient */
   background-image: linear-gradient(#ffecc3, #ffa7ba);
   padding: 20px 50px;
-}
-
-#workout-section {
-  background-image: linear-gradient(#a5faef, #f8d4dc);
 }
 
 #workout-form {
@@ -81,6 +85,7 @@ form > h3 {
 .form-row > label {
   flex: 0 0 auto;
   margin-right: 10px;
+  /* two-word labels would keep wrapping to the next line so a no-wrap property was used */
   white-space: nowrap;
 }
 
@@ -91,6 +96,7 @@ form > h3 {
   padding: 8px;
 }
 
+/* Making the submit buttons visually different from the above form rows */
 .form-submit > input {
   border-radius: 25px;
   font-size: 18px;
@@ -112,7 +118,6 @@ form > h3 {
 #forms-section {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
 }
 
 #lists-section {
@@ -124,11 +129,12 @@ form > h3 {
 
 #sessionList {
   display: flex;
+  /* Making sessions wrap to the next line for better space distribution and visual clarity. 
+  Especially useful for mobile layout */
   flex-wrap: wrap;
   list-style-type: none;
   padding: 0px;
 }
-
 
 #sessionList li {
   margin: 5px;
@@ -152,6 +158,7 @@ form > h3 {
   background-color: #fff;
 }
 
+/* Styling for the delete button. Red was used for higher contrast */
 button {
   margin-top: 10px;
   padding: 10px 15px;

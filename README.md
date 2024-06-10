@@ -34,6 +34,8 @@ Skill and time constraints meant that initial mockup designs were a bit too ambi
 
 The largest change was the complete removal of the calendar system on the left. The concept of creating a clickable calendar with the 'tasks' being displayed on the right was just too far out of reach for this assessment. Instead, the submission form (top image) occupied the left section of the prototype. Users are now able to see past session and workout info while they input new entries using the form.  
 
+Flexbox styling was used in response to concerns brought up with responsive design in the A2 Design Proposal feedback. The submitted sessions/workouts will display vertically underneath the forms on mobile layouts.  
+
 ## Structural Changes from Mockups
 The original data model designs also had to undergo slight adjustments when deciding what elements or properties seemed to difficult to create for this prototype.   
 1. **Attached image for workout category dropdown:** When choosing workout categories, the original plan was for users to be shown an icon next to respective dropdown options for visual aid. This was deemed too difficult to reproduce and was simplified to a regular text-only dropdown 
